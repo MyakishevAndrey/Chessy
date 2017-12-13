@@ -1,11 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <memory>
 #include "io_interface.h"
 #include "solver.h"
 #include "boards.h"
-
-
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -30,13 +27,13 @@ int main(int argc, char *argv[]) {
     }
     std::shared_ptr<chessy::board> shr(b);
     chessy::solver solver(shr);
-    auto solutions = solver.solve(pair.first);
-//    auto solutions = solver.solve_not_fundamental(pair.first);
+    auto solutions = solver.solve_not_fundamental(pair.first);
+//    auto solutions = solver.solve(pair.first);
 
     std::ofstream of(argv[2]);
 
     for (const auto &s : solutions) {
-        i.print_solution(std::cout, s, pair.second == modes::independent);
+        i.print_solution(of, s, pair.second == modes::independent);
     }
 
     return 0;
